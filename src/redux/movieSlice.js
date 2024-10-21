@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchMovies, fetchMovieDetails } from "../api/moviesApi";
+import { fetchMovies } from "../api/moviesApi";
 
 const initialState = {
   watchlist: [],
@@ -35,15 +35,6 @@ const movieSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Something went wrong";
       });
-    // .addCase(fetchMovieDetails.fulfilled, (state, action) => {
-    //   const updatedMovies = state.movies.map((movie) => {
-    //     if (movie.imdbID === action.payload.imdbID) {
-    //       return { ...movie, ...action.payload };
-    //     }
-    //     return movie;
-    //   });
-    //   state.movies = updatedMovies;
-    // });
   },
 });
 

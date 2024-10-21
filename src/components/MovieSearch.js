@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../api/moviesApi";
+import MovieCard from "./MovieCard";
 import { addMovieToWatchlist } from "../redux/movieSlice";
 
 const MovieSearch = () => {
@@ -14,10 +15,6 @@ const MovieSearch = () => {
       dispatch(fetchMovies(searchTerm));
     }
   };
-
-  // const handleFetchDetails = (imdbID) => {
-  //   dispatch(fetchMovieDetails(imdbID));
-  // };
 
   return (
     <div className="p-4">
@@ -44,26 +41,7 @@ const MovieSearch = () => {
       {movies.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           {movies.map((movie) => (
-            <div key={movie.imdbID} className="border p-4">
-              <h2 className="text-lg font-bold">{movie.Title}</h2>
-              <img src={movie.Poster} alt="movie poster" />
-              <p>
-                <strong>Genre:</strong> {movie.Genre}
-              </p>
-              <p>
-                <strong>Director:</strong> {movie.Director}
-              </p>
-              <p>Plot: {movie.Plot}</p>
-              <button
-                className="bg-gray-500 text-white p-2 rounded mt-2"
-                onClick={() => {
-                  console.log(movie);
-                  // dispatch(addMovieToWatchlist(movie))
-                }}
-              >
-                Add to Watchlist
-              </button>
-            </div>
+            <MovieCard key={movie.imdbID} movie={movie} />
           ))}
         </div>
       )}

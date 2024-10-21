@@ -31,36 +31,13 @@ export const fetchMovies = createAsyncThunk(
             throw new Error("Network response was not ok");
           }
           const detailData = await detailResponse.json();
-          return { ...movie, ...detailData }; // Combine basic and detail info
+          return { ...movie, ...detailData };
         })
       );
+
       return moviesWithDetails;
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
-
-// export const fetchMovieDetails = createAsyncThunk(
-//   "movies/fetchMovieDetails",
-//   async (imdbID, { rejectWithValue }) => {
-//     try {
-//       const response = await fetch(
-//         `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`
-//       );
-//       if (!response.ok) {
-//         throw new Error("Network response was not ok");
-//       }
-
-//       const data = await response.json();
-
-//       if (data.Response === "False") {
-//         throw new Error(data.Error);
-//       }
-
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
