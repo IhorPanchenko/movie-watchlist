@@ -1,18 +1,32 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from "../api/moviesApi";
 import MovieCard from "./MovieCard";
+import { fetchMovies } from "../api/moviesApi";
 import { addMovieToWatchlist } from "../redux/movieSlice";
 
 const MovieSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
-  const { movies, loading, error } = useSelector((state) => state.movies);
+  const { watchlist, movies, loading, error } = useSelector(
+    (state) => state.movies
+  );
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
       dispatch(fetchMovies(searchTerm));
+    }
+  };
+
+  const handleAddToWatchlist = (movie) => {
+    const isInWatchlist = watchlist.some(
+      (item) => item.imdbID === movie.imdbID
+    );
+
+    if (!isInWatchlist) {
+      dispatch(addMovieToWatchlist(movie));
+    } else {
+      alert("This movie is already in your watchlist.");
     }
   };
 
@@ -41,7 +55,12 @@ const MovieSearch = () => {
       {movies.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           {movies.map((movie) => (
-            <MovieCard key={movie.imdbID} movie={movie} />
+            <MovieCard
+              key={movie.imdbID}
+              movie={movie}
+              onAddToWatchlist={handleAddToWatchlist}
+              actionType="add"
+            />
           ))}
         </div>
       )}

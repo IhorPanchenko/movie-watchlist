@@ -1,4 +1,9 @@
-const MovieCard = ({ movie, addMovieToWatchlist }) => {
+const MovieCard = ({
+  movie,
+  onAddToWatchlist,
+  onRemoveFromWatchlist,
+  actionType,
+}) => {
   return (
     <div className="border p-4">
       <img src={movie.Poster} alt="movie poster" />
@@ -7,15 +12,25 @@ const MovieCard = ({ movie, addMovieToWatchlist }) => {
         {movie.Year}, {movie.Country}, {movie.Genre}
       </p>
 
-      <button
-        className="bg-gray-500 text-white p-2 rounded mt-2"
-        onClick={() => {
-          console.log(movie);
-          // dispatch(addMovieToWatchlist(movie))
-        }}
-      >
-        Add to Watchlist
-      </button>
+      {actionType === "add" ? (
+        <button
+          className="bg-gray-500 text-white p-2 rounded mt-2"
+          onClick={() => {
+            onAddToWatchlist(movie);
+          }}
+        >
+          Add to Watchlist
+        </button>
+      ) : (
+        <button
+          className="bg-red-500 text-white p-2 rounded mt-2"
+          onClick={() => {
+            onRemoveFromWatchlist(movie.imdbID);
+          }}
+        >
+          Remove from Watchlist
+        </button>
+      )}
     </div>
   );
 };
