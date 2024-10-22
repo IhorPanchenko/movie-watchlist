@@ -10,6 +10,7 @@ const MovieCard = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
 
   const handleDetailsClick = () => {
     setIsModalOpen(true);
@@ -17,6 +18,11 @@ const MovieCard = ({
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleAddToWatchlist = (movie) => {
+    onAddToWatchlist(movie);
+    setIsAdded(true); // Update state when movie is added
   };
 
   return (
@@ -50,7 +56,7 @@ const MovieCard = ({
               {actionType === "add" ? (
                 <button
                   className="bg-green-600 text-white p-2 rounded-full hover:bg-green-500 transition flex items-center justify-center"
-                  onClick={() => onAddToWatchlist(movie)}
+                  onClick={() => handleAddToWatchlist(movie)}
                 >
                   <FaPlus className="text-white text-2xl" />
                 </button>
@@ -76,7 +82,8 @@ const MovieCard = ({
         {isModalOpen && (
           <MovieDetailsModal
             movie={movie}
-            addToWatchlist={() => onAddToWatchlist(movie)}
+            isAdded={isAdded}
+            addToWatchlist={handleAddToWatchlist}
             onClose={handleCloseModal}
           />
         )}

@@ -1,33 +1,24 @@
-import { useState } from "react";
 import { FaPlus, FaCheck, FaTimes } from "react-icons/fa";
 
-const MovieDetailsModal = ({ movie, addToWatchlist, onClose }) => {
-  const [isAdded, setIsAdded] = useState(false);
-
-  const handleAddToWatchlist = () => {
-    addToWatchlist(movie);
-    setIsAdded(true);
-  };
-
+const MovieDetailsModal = ({ movie, isAdded, addToWatchlist, onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm z-50">
       <div className="bg-white p-6 rounded-lg max-w-3xl w-full relative shadow-lg">
         {/* Add Button */}
-        {isAdded ? (
-          <button
-            onClick={handleAddToWatchlist}
-            className="absolute -top-4 right-7 bg-gray-600 text-white w-8 h-8 flex items-center justify-center rounded-full"
-          >
+        <button
+          onClick={addToWatchlist}
+          className={`absolute -top-4 right-7 ${
+            isAdded
+              ? "bg-gray-600"
+              : "bg-green-600 hover:bg-green-700 transition"
+          } text-white w-8 h-8 flex items-center justify-center rounded-full`}
+        >
+          {isAdded ? (
             <FaCheck className="text-sm" />
-          </button>
-        ) : (
-          <button
-            onClick={handleAddToWatchlist}
-            className="absolute -top-4 right-7 bg-green-600 text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-green-700 transition"
-          >
+          ) : (
             <FaPlus className="text-sm" />
-          </button>
-        )}
+          )}
+        </button>
 
         {/* Close Button */}
         <button
