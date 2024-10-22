@@ -12,9 +12,9 @@ const Watchlist = () => {
 
   return (
     <div>
-      <h2>Your Watchlist</h2>
+      <h2 className="text-2xl font-bold my-6 text-center">Your Watchlist</h2>
       {watchlist.length > 0 ? (
-        <div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {watchlist.map((movie) => (
             <MovieCard
               key={movie.imdbID}
@@ -25,7 +25,9 @@ const Watchlist = () => {
           ))}
         </div>
       ) : (
-        <p>No movies in your watchlist.</p>
+        <p className="text-center text-lg text-gray-500">
+          No movies in your watchlist.
+        </p>
       )}
     </div>
   );

@@ -31,29 +31,32 @@ const MovieSearch = () => {
   };
 
   return (
-    <div className="p-4">
-      <form onSubmit={handleSearch}>
+    <div>
+      <form
+        className="flex flex-col md:flex-row items-center justify-center mb-8"
+        onSubmit={handleSearch}
+      >
         <input
-          className="border p-2 rounded"
+          className="border border-gray-300 p-3 rounded-lg w-full md:w-auto flex-grow md:flex-grow-0 mb-4 md:mb-0"
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search a movie"
         />
         <button
-          className="bg-blue-500 text-white p-2 rounded ml-2"
+          className="bg-blue-500 text-white p-3 rounded-lg w-full md:w-auto md:ml-4 transition-colors duration-300 hover:bg-blue-600"
           type="submit"
         >
           Search
         </button>
       </form>
 
-      {loading && <p>Loading...</p>}
+      {loading && <p className="text-center text-gray-500">Loading...</p>}
 
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-center text-red-500">{error}</p>}
 
       {movies.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {movies.map((movie) => (
             <MovieCard
               key={movie.imdbID}
