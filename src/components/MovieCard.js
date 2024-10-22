@@ -1,57 +1,86 @@
+import { useState } from "react";
+import { FaPlus, FaInfoCircle, FaTrash } from "react-icons/fa";
+import MovieDetailsModal from "./MovieDetailsModal";
+
 const MovieCard = ({
   movie,
+  actionType,
   onAddToWatchlist,
   onRemoveFromWatchlist,
-  actionType,
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleDetailsClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="flex flex-col min-h-[500px] border rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
-      <div className="relative w-full pb-[80%] md:pb-[120%] sm:pb-[130%]">
+    <div
+      className="flex flex-col border rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="relative w-full h-0 pb-[150%]">
         <img
-          className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
+          className={`absolute inset-0 w-full h-full object-cover rounded-md transition-opacity duration-300 ease-in-out ${
+            isHovered ? "opacity-50" : "opacity-100"
+          }`}
           src={movie.Poster}
           alt={`${movie.Title} poster`}
         />
-      </div>
 
-      <div className="flex-1">
-        <h2 className="text-lg font-semibold text-gray-800 mb-2">
-          {movie.Title}
-        </h2>
-        <p className="text-gray-600">
-          <span className="font-semibold">Year:</span> {movie.Year}
-        </p>
-        <p className="text-gray-600">
-          <span className="font-semibold">Director:</span>{" "}
-          {movie.Director || "N/A"}
-        </p>
-        <p className="text-gray-600 truncate">
-          <span className="font-semibold">Actors:</span> {movie.Actors || "N/A"}
-        </p>
-        <p className="text-gray-600 mb-4">
-          <span className="font-semibold">Genre:</span> {movie.Genre || "N/A"}
-        </p>
-      </div>
+        {isHovered && (
+          <div className="absolute inset-0 bg-black text-center bg-opacity-60 flex flex-col items-center justify-center rounded-md text-white p-4">
+            <h2 className="text-xl font-semibold mb-4">{movie.Title}</h2>
+            <p className="text-base mb-2">
+              <strong>Year:</strong> {movie.Year}
+            </p>
+            <p className="text-base mb-2">
+              <strong>Director:</strong> {movie.Director || "N/A"}
+            </p>
+            <p className="text-base mb-4">
+              <strong>Cast:</strong> {movie.Actors || "N/A"}
+            </p>
+            <div className="flex space-x-2 mt-4">
+              {actionType === "add" ? (
+                <button
+                  className="bg-green-600 text-white p-2 rounded-full hover:bg-green-500 transition flex items-center justify-center"
+                  onClick={() => onAddToWatchlist(movie)}
+                >
+                  <FaPlus className="text-white text-2xl" />
+                </button>
+              ) : (
+                <button
+                  className="bg-red-500 p-2 rounded-full hover:bg-red-600 transition"
+                  onClick={() => onRemoveFromWatchlist(movie.imdbID)}
+                >
+                  <FaTrash className="text-white text-2xl" />
+                </button>
+              )}
 
-      {actionType === "add" ? (
-        <button
-          className="w-full bg-blue-500 text-white font-semibold p-2 rounded hover:bg-blue-600 transition-colors duration-300 ease-in-out mt-auto"
-          onClick={() => {
-            onAddToWatchlist(movie);
-          }}
-        >
-          Add to Watchlist
-        </button>
-      ) : (
-        <button
-          className="w-full bg-red-500 text-white font-semibold p-2 rounded hover:bg-red-600 transition-colors duration-300 ease-in-out mt-auto"
-          onClick={() => {
-            onRemoveFromWatchlist(movie.imdbID);
-          }}
-        >
-          Remove from Watchlist
-        </button>
-      )}
+              <button
+                className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-500 transition flex items-center justify-center"
+                onClick={handleDetailsClick}
+              >
+                <FaInfoCircle className="text-gray-300 text-2xl" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {isModalOpen && (
+          <MovieDetailsModal
+            movie={movie}
+            addToWatchlist={() => onAddToWatchlist(movie)}
+            onClose={handleCloseModal}
+          />
+        )}
+      </div>
     </div>
   );
 };

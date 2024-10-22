@@ -16,6 +16,7 @@ const MovieSearch = () => {
     if (searchTerm.trim()) {
       dispatch(fetchMovies(searchTerm));
     }
+    setSearchTerm("");
   };
 
   const handleAddToWatchlist = (movie) => {
