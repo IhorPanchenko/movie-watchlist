@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchMovies } from "../api/moviesApi";
+import { fetchMovies } from "../api/movieApi";
 
 const initialState = {
   watchlist: [],

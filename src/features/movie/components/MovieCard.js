@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaPlus, FaInfoCircle, FaTrash } from "react-icons/fa";
+import { FaPlus, FaCheck, FaInfoCircle, FaTrash } from "react-icons/fa";
 import MovieDetailsModal from "./MovieDetailsModal";
 
 const MovieCard = ({
@@ -20,9 +20,9 @@ const MovieCard = ({
     setIsModalOpen(false);
   };
 
-  const handleAddToWatchlist = (movie) => {
+  const handleAddToWatchlist = () => {
     onAddToWatchlist(movie);
-    setIsAdded(true); // Update state when movie is added
+    setIsAdded(true);
   };
 
   return (
@@ -55,10 +55,20 @@ const MovieCard = ({
             <div className="flex space-x-2 mt-4">
               {actionType === "add" ? (
                 <button
-                  className="bg-green-600 text-white p-2 rounded-full hover:bg-green-500 transition flex items-center justify-center"
-                  onClick={() => handleAddToWatchlist(movie)}
+                  className={`p-2 rounded-full transition flex items-center justify-center ${
+                    isAdded
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-green-600 hover:bg-green-500"
+                  }`}
+                  onClick={handleAddToWatchlist}
+                  disabled={isAdded}
                 >
-                  <FaPlus className="text-white text-2xl" />
+                  {isAdded ? (
+                    <FaCheck className="text-white text-2xl" />
+                  ) : (
+                    <FaPlus className="text-white text-2xl" />
+                  )}
+                  {/* <FaPlus className="text-white text-2xl" /> */}
                 </button>
               ) : (
                 <button
@@ -83,6 +93,7 @@ const MovieCard = ({
           <MovieDetailsModal
             movie={movie}
             isAdded={isAdded}
+            setIsAdded={setIsAdded}
             addToWatchlist={handleAddToWatchlist}
             onClose={handleCloseModal}
           />

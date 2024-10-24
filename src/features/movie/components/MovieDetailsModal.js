@@ -1,17 +1,39 @@
+// import { useState, useEffect } from "react";
 import { FaPlus, FaCheck, FaTimes } from "react-icons/fa";
 
-const MovieDetailsModal = ({ movie, isAdded, addToWatchlist, onClose }) => {
+const MovieDetailsModal = ({
+  movie,
+  addToWatchlist,
+  onClose,
+  isAdded,
+  setIsAdded,
+}) => {
+  // const [isAdded, setIsAdded] = useState(false);
+
+  const handleAddToWatchlist = () => {
+    if (!isAdded) {
+      addToWatchlist(movie);
+      setIsAdded(true);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (isAdded) {
+  //   }
+  // }, [isAdded]);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm z-50">
       <div className="bg-white p-6 rounded-lg max-w-3xl w-full relative shadow-lg">
         {/* Add Button */}
         <button
-          onClick={addToWatchlist}
+          onClick={handleAddToWatchlist}
           className={`absolute -top-4 right-7 ${
             isAdded
-              ? "bg-gray-600"
-              : "bg-green-600 hover:bg-green-700 transition"
-          } text-white w-8 h-8 flex items-center justify-center rounded-full`}
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-green-600 hover:bg-green-700"
+          } text-white w-8 h-8 flex items-center justify-center rounded-full transition`}
+          disabled={isAdded}
         >
           {isAdded ? (
             <FaCheck className="text-sm" />
