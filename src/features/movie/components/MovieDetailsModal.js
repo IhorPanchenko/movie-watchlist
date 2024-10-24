@@ -1,42 +1,25 @@
-// import { useState, useEffect } from "react";
-import { FaPlus, FaCheck, FaTimes } from "react-icons/fa";
+import { FaPlus, FaTrash, FaTimes } from "react-icons/fa";
 
 const MovieDetailsModal = ({
   movie,
-  addToWatchlist,
   onClose,
-  isAdded,
-  setIsAdded,
+  handleToggleWatchlist,
+  isInWatchlist,
 }) => {
-  // const [isAdded, setIsAdded] = useState(false);
-
-  const handleAddToWatchlist = () => {
-    if (!isAdded) {
-      addToWatchlist(movie);
-      setIsAdded(true);
-    }
-  };
-
-  // useEffect(() => {
-  //   if (isAdded) {
-  //   }
-  // }, [isAdded]);
-
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm z-50">
       <div className="bg-white p-6 rounded-lg max-w-3xl w-full relative shadow-lg">
-        {/* Add Button */}
+        {/* Toggle Button */}
         <button
-          onClick={handleAddToWatchlist}
-          className={`absolute -top-4 right-7 ${
-            isAdded
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-green-600 hover:bg-green-700"
-          } text-white w-8 h-8 flex items-center justify-center rounded-full transition`}
-          disabled={isAdded}
+          onClick={handleToggleWatchlist}
+          className={`absolute -top-4 right-7 flex items-center justify-center w-8 h-8 text-white rounded-full transition ${
+            isInWatchlist
+              ? "bg-red-600 hover:bg-red-700 border border-red-400" // Red for removing from watchlist
+              : "bg-green-600 hover:bg-green-700 border border-green-400" // Green for adding to watchlist
+          }`} // Adding a shadow for depth
         >
-          {isAdded ? (
-            <FaCheck className="text-sm" />
+          {isInWatchlist ? (
+            <FaTrash className="text-sm" />
           ) : (
             <FaPlus className="text-sm" />
           )}
@@ -45,7 +28,7 @@ const MovieDetailsModal = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute -top-4 -right-2 bg-red-600 text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-700 transition"
+          className="absolute -top-4 -right-2 flex items-center justify-center w-8 h-8 rounded-full bg-gray-600 text-white transition hover:bg-gray-700 border border-gray-400"
         >
           <FaTimes className="text-sm" />
         </button>

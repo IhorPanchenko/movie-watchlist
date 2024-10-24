@@ -1,42 +1,38 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const apiKey = process.env.REACT_APP_OMDB_API_KEY;
+const baseUrl = "http://www.omdbapi.com/";
+
+const fetchFromApi = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
+};
 
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
   async (searchTerm, { rejectWithValue }) => {
     try {
-      const response = await fetch(
-        `http://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}`
-      );
+      const moviesUrl = `${baseUrl}?apikey=${apiKey}&s=${searchTerm}`;
+      const { Search, Response, Error } = await fetchFromApi(moviesUrl);
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      if (Response === "False") {
+        throw new Error(Error);
       }
-
-      const data = await response.json();
-
-      if (data.Response === "False") {
-        throw new Error(data.Error);
-      }
-
-      const movies = data.Search;
 
       const moviesWithDetails = await Promise.all(
-        movies.map(async (movie) => {
-          const detailResponse = await fetch(
-            `http://www.omdbapi.com/?apikey=${apiKey}&i=${movie.imdbID}`
-          );
-          if (!detailResponse.ok) {
-            throw new Error("Network response was not ok");
-          }
-          const detailData = await detailResponse.json();
+        Search.map(async (movie) => {
+          const detailUrl = `${baseUrl}?apikey=${apiKey}&i=${movie.imdbID}`;
+          const detailData = await fetchFromApi(detailUrl);
           return { ...movie, ...detailData };
         })
       );
 
       return moviesWithDetails;
     } catch (error) {
+      console.log("Fetch movies failed:", error);
       return rejectWithValue(error.message);
     }
   }

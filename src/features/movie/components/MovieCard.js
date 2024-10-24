@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { FaPlus, FaCheck, FaInfoCircle, FaTrash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { FaPlus, FaInfoCircle, FaTrash } from "react-icons/fa";
+import {
+  addMovieToWatchlist,
+  removeMovieFromWatchlist,
+} from "../redux/movieSlice";
 import MovieDetailsModal from "./MovieDetailsModal";
 
-const MovieCard = ({
-  movie,
-  actionType,
-  onAddToWatchlist,
-  onRemoveFromWatchlist,
-}) => {
+const MovieCard = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAdded, setIsAdded] = useState(false);
+  const dispatch = useDispatch();
+  const watchlist = useSelector((state) => state.movies.watchlist);
+  const isInWatchlist = watchlist.some((item) => item.imdbID === movie.imdbID);
 
   const handleDetailsClick = () => {
     setIsModalOpen(true);
@@ -20,9 +22,12 @@ const MovieCard = ({
     setIsModalOpen(false);
   };
 
-  const handleAddToWatchlist = () => {
-    onAddToWatchlist(movie);
-    setIsAdded(true);
+  const handleToggleWatchlist = () => {
+    if (isInWatchlist) {
+      dispatch(removeMovieFromWatchlist(movie.imdbID));
+    } else {
+      dispatch(addMovieToWatchlist(movie));
+    }
   };
 
   return (
@@ -53,34 +58,23 @@ const MovieCard = ({
               <strong>Cast:</strong> {movie.Actors || "N/A"}
             </p>
             <div className="flex space-x-2 mt-4">
-              {actionType === "add" ? (
-                <button
-                  className={`p-2 rounded-full transition flex items-center justify-center ${
-                    isAdded
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-green-600 hover:bg-green-500"
-                  }`}
-                  onClick={handleAddToWatchlist}
-                  disabled={isAdded}
-                >
-                  {isAdded ? (
-                    <FaCheck className="text-white text-2xl" />
-                  ) : (
-                    <FaPlus className="text-white text-2xl" />
-                  )}
-                  {/* <FaPlus className="text-white text-2xl" /> */}
-                </button>
-              ) : (
-                <button
-                  className="bg-red-500 p-2 rounded-full hover:bg-red-600 transition"
-                  onClick={() => onRemoveFromWatchlist(movie.imdbID)}
-                >
+              <button
+                className={`p-2 rounded-full transition flex items-center justify-center ${
+                  isInWatchlist
+                    ? "bg-red-600 hover:bg-red-700 border border-red-400"
+                    : "bg-green-600 hover:bg-green-700 border border-green-400"
+                }`}
+                onClick={handleToggleWatchlist}
+              >
+                {isInWatchlist ? (
                   <FaTrash className="text-white text-2xl" />
-                </button>
-              )}
+                ) : (
+                  <FaPlus className="text-white text-2xl" />
+                )}
+              </button>
 
               <button
-                className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-500 transition flex items-center justify-center"
+                className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-500 transition flex items-center justify-center border border-blue-400"
                 onClick={handleDetailsClick}
               >
                 <FaInfoCircle className="text-gray-300 text-2xl" />
@@ -92,10 +86,9 @@ const MovieCard = ({
         {isModalOpen && (
           <MovieDetailsModal
             movie={movie}
-            isAdded={isAdded}
-            setIsAdded={setIsAdded}
-            addToWatchlist={handleAddToWatchlist}
+            handleToggleWatchlist={handleToggleWatchlist}
             onClose={handleCloseModal}
+            isInWatchlist={isInWatchlist}
           />
         )}
       </div>

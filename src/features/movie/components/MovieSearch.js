@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from "./MovieCard";
 import { fetchMovies } from "../../../api/movieApi";
-import { addMovieToWatchlist } from "../../../redux/movieSlice";
+import { addMovieToWatchlist } from "../redux/movieSlice";
 
 const MovieSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,7 +63,7 @@ const MovieSearch = () => {
               key={movie.imdbID}
               movie={movie}
               onAddToWatchlist={handleAddToWatchlist}
-              actionType="add"
+              // actionType="add"
             />
           ))}
         </div>

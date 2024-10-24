@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from "./MovieCard";
-import { removeMovieFromWatchlist } from "../../../redux/movieSlice";
+import { removeMovieFromWatchlist } from "../redux/movieSlice";
 
 const Watchlist = () => {
   const { watchlist } = useSelector((state) => state.movies);
