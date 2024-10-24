@@ -1,70 +1,93 @@
-# Getting Started with Create React App
+# Watchlist App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The **Watchlist App** allows users to search for movies using the [OMDb API](https://www.omdbapi.com/) and save them to a personal watchlist. The app is built using React and Redux, with a responsive design and clean user interface.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Search for Movies**: Search for movies by title using the OMDb API.
+- **Movie Details**: View details such as the plot, cast, ratings, and more.
+- **Watchlist Management**: Add or remove movies from your personal watchlist.
+- **Responsive Design**: Optimized layout for both desktop and mobile screens.
+- **Toast Notifications**: Feedback for actions like adding or removing movies.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React**: Front-end JavaScript framework.
+- **Redux**: State management for handling movie data and the watchlist.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **React Toastify**: For toast notifications.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Ensure you have the following installed:
 
-### `npm run build`
+- **Node.js**: [Download Node.js](https://nodejs.org/)
+- **npm** or **yarn**: Package managers to install dependencies.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone the repository**:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   git clone https://github.com/your-username/watchlist-app.git
+   cd watchlist-app
+   ```
 
-### `npm run eject`
+2. **Install dependencies**:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   Using `npm`:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   npm install
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   Or using `yarn`:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   yarn install
+   ```
 
-## Learn More
+3. **Set up environment variables**:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   Create a `.env` file in the root of the project and add your OMDb API key:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```bash
+   REACT_APP_OMDB_API_KEY=your_api_key_here
+   ```
 
-### Code Splitting
+4. **Start the development server**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   Using `npm`:
 
-### Analyzing the Bundle Size
+   ```bash
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   Or using `yarn`:
 
-### Making a Progressive Web App
+   ```bash
+   yarn start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+   The app will be available at `http://localhost:3000`.
 
-### Advanced Configuration
+### Getting an OMDb API Key
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The app uses the OMDb API to retrieve movie data. Follow these steps to obtain an API key:
 
-### Deployment
+1. Visit [OMDb API](https://www.omdbapi.com/apikey.aspx).
+2. Sign up with your email and requested details.
+3. You'll receive an API key via email.
+4. Copy the API key and add it to your `.env` file like so:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+   ```bash
+   REACT_APP_OMDB_API_KEY=your_api_key_here
+   ```
 
-### `npm run build` fails to minify
+### Available Scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **`npm start`**: Starts the development server.
+- **`npm run build`**: Builds the app for production.
+- **`npm test`**: Runs the test suite (if tests are available).

@@ -13,7 +13,17 @@ const movieSlice = createSlice({
   initialState,
   reducers: {
     addMovieToWatchlist: (state, action) => {
-      state.watchlist.push(action.payload);
+      const movieExists = state.watchlist.some(
+        (movie) => movie.imdbID === action.payload.imdbID
+      );
+
+      if (!movieExists) {
+        state.watchlist.push(action.payload);
+      } else {
+        console.warn(
+          `Movie with ID ${action.payload.imdbID} is already in the watchlist.`
+        );
+      }
     },
     removeMovieFromWatchlist: (state, action) => {
       state.watchlist = state.watchlist.filter(
@@ -33,11 +43,13 @@ const movieSlice = createSlice({
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || "Something went wrong";
+        state.error =
+          action.payload || "Something went wrong during the fetch.";
       });
   },
 });
 
 export const { addMovieToWatchlist, removeMovieFromWatchlist } =
   movieSlice.actions;
+
 export default movieSlice.reducer;

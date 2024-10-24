@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaPlus, FaInfoCircle, FaTrash } from "react-icons/fa";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import { FaPlus, FaInfoCircle, FaTrash } from "react-icons/fa";
 import MovieDetailsModal from "./MovieDetailsModal";
 import {
   addMovieToWatchlist,
@@ -27,10 +28,12 @@ const MovieCard = ({ movie }) => {
   const handleToggleWatchlist = useCallback(() => {
     if (isInWatchlist) {
       dispatch(removeMovieFromWatchlist(movie.imdbID));
+      toast.error(`${Title} has been removed from your watchlist!`);
     } else {
       dispatch(addMovieToWatchlist(movie));
+      toast.success(`${Title} has been added to your watchlist!`);
     }
-  }, [dispatch, isInWatchlist, movie]);
+  }, [dispatch, isInWatchlist, movie, Title]);
 
   return (
     <div
