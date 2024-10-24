@@ -38,6 +38,7 @@ const MovieSearch = () => {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         handleSearch={handleSearch}
+        loading={loading}
       />
 
       {loading && <p className="text-center text-gray-500">Loading...</p>}
