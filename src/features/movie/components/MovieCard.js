@@ -42,7 +42,7 @@ const MovieCard = ({ movie }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image for the movie poster */}
-      <div className="relative w-full h-0 pb-[150%]">
+      <div className="relative w-full h-0 pb-[100%] sm:pb-[150%]">
         <img
           className={`absolute inset-0 w-full h-full object-cover rounded-md transition-opacity duration-300 ease-in-out ${
             isHovered ? "opacity-50" : "opacity-100"

@@ -24,7 +24,7 @@ const MovieDetailsModal = ({
 }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm z-50">
-      <div className="bg-white p-6 rounded-lg max-w-3xl w-full relative shadow-lg">
+      <div className="bg-white p-3 lg:p-4 rounded-lg max-w-[400px] max-h-[800px] lg:max-w-3xl sm:max-w-xl w-full relative shadow-lg">
         {/* Toggle Button */}
         <button
           onClick={handleToggleWatchlist}
@@ -53,9 +53,11 @@ const MovieDetailsModal = ({
         </button>
 
         {/* Movie Info Header */}
-        <div className="flex justify-between items-baseline mb-4">
-          <div className="w-3/4">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">{Title}</h2>
+        <div className="flex lg:flex-row justify-between items-baseline mb-4">
+          <div className="w-full lg:w-3/4">
+            <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-2">
+              {Title}
+            </h2>
             <div className="flex text-gray-600">
               <span>{Year}</span>
               <div className="mx-2 my-auto w-1 h-1 bg-gray-500 rounded-full"></div>
@@ -66,38 +68,40 @@ const MovieDetailsModal = ({
           </div>
 
           {/* Ratings Section */}
-          <div className="w-1/4 flex items-center justify-between text-center text-gray-800">
+          <div className="w-2/4 lg:w-1/4 flex items-center justify-between mt-0 lg:mt-4 text-center text-gray-800">
             <div>
-              <div className="text-base font-semibold">Metascore</div>
-              <div className="text-sm">{Metascore}%</div>
+              <div className="text-sm lg:text-base font-semibold">
+                Metascore
+              </div>
+              <div className="text-xs lg:text-sm">{Metascore}%</div>
             </div>
             <div>
-              <div className="text-base font-semibold">IMDb</div>
-              <div className="text-sm">{imdbRating}/10</div>
+              <div className="text-sm lg:text-base font-semibold">IMDb</div>
+              <div className="text-xs lg:text-sm">{imdbRating}/10</div>
             </div>
           </div>
         </div>
 
         {/* Movie Content */}
-        <div className="flex">
+        <div className="flex flex-col sm:flex-row">
           {/* Poster */}
-          <div className="w-1/3 min-h-[360px]">
+          <div className="relative w-[350px] h-[350px] lg:w-1/3 mx-auto mb-4 sm:mb-0">
             <img
-              className="w-full h-auto rounded-md shadow-md"
+              className="absolute inset-0 w-full h-full object-cover rounded-md shadow-md"
               src={Poster}
               alt={`${Title} poster`}
             />
           </div>
 
           {/* Movie Details */}
-          <div className="w-2/3 pl-6 text-gray-700">
+          <div className="flex flex-col  w-full lg:w-2/3 ml-0 lg:pl-6 sm:ml-4 text-gray-700">
             {/* Genres */}
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-4">
               {Genre
                 ? Genre.split(", ").map((genre, index) => (
                     <span
                       key={index}
-                      className="border border-gray-300 bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-sm"
+                      className="border border-gray-300 bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs lg:text-sm"
                     >
                       {genre}
                     </span>
@@ -106,20 +110,20 @@ const MovieDetailsModal = ({
             </div>
 
             {/* Additional Info */}
-            <p className="text-base mb-3">{Plot || "N/A"}</p>
-            <p className="text-base mb-2">
+            <p className="text-sm lg:text-base mb-3">{Plot || "N/A"}</p>
+            <p className="text-sm lg:text-base mb-2">
               <strong>Director:</strong> {Director || "N/A"}
             </p>
-            <p className="text-base mb-2">
+            <p className="text-sm lg:text-base mb-2">
               <strong>Writer:</strong> {Writer || "N/A"}
             </p>
-            <p className="text-base mb-2">
+            <p className="text-sm lg:text-base mb-2">
               <strong>Cast:</strong> {Actors || "N/A"}
             </p>
-            <p className="text-base mb-2">
+            <p className="text-sm lg:text-base mb-2">
               <strong>Country:</strong> {Country || "N/A"}
             </p>
-            <p className="text-base mb-2">
+            <p className="text-sm lg:text-base mb-2">
               <strong>Awards:</strong> {Awards || "N/A"}
             </p>
           </div>
