@@ -24,7 +24,7 @@ const MovieDetailsModal = ({
 }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm z-50">
-      <div className="bg-white p-3 lg:p-4 rounded-lg max-w-[400px] max-h-[800px] lg:max-w-3xl sm:max-w-xl w-full relative shadow-lg">
+      <div className="bg-white dark:bg-gray-800 p-3 lg:p-4 rounded-lg w-full max-w-[400px] sm:max-w-xl lg:max-w-3xl max-h-[800px] relative shadow-lg dark:border-gray-700">
         {/* Toggle Button */}
         <button
           onClick={handleToggleWatchlist}
@@ -47,7 +47,7 @@ const MovieDetailsModal = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute -top-4 -right-2 flex items-center justify-center w-8 h-8 rounded-full bg-gray-600 text-white transition hover:bg-gray-700 border border-gray-400"
+          className="absolute -top-4 -right-2 flex items-center justify-center w-8 h-8 rounded-full bg-gray-600 dark:bg-gray-700 text-white border border-gray-400 transition hover:bg-gray-700 dark:hover:bg-gray-600"
         >
           <FaTimes className="text-sm" />
         </button>
@@ -55,10 +55,10 @@ const MovieDetailsModal = ({
         {/* Movie Info Header */}
         <div className="flex lg:flex-row justify-between items-baseline mb-4">
           <div className="w-full lg:w-3/4">
-            <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {Title}
             </h2>
-            <div className="flex text-gray-600">
+            <div className="flex text-gray-600 dark:text-gray-400">
               <span>{Year}</span>
               <div className="mx-2 my-auto w-1 h-1 bg-gray-500 rounded-full"></div>
               <span>{Rated}</span>
@@ -68,7 +68,7 @@ const MovieDetailsModal = ({
           </div>
 
           {/* Ratings Section */}
-          <div className="w-2/4 lg:w-1/4 flex items-center justify-between mt-0 lg:mt-4 text-center text-gray-800">
+          <div className="w-2/4 lg:w-1/4 flex items-center justify-between mt-0 lg:mt-4 text-center text-gray-800 dark:text-gray-300">
             <div>
               <div className="text-sm lg:text-base font-semibold">
                 Metascore
@@ -85,7 +85,7 @@ const MovieDetailsModal = ({
         {/* Movie Content */}
         <div className="flex flex-col sm:flex-row">
           {/* Poster */}
-          <div className="relative w-[350px] h-[350px] lg:w-1/3 mx-auto mb-4 sm:mb-0">
+          <div className="relative w-[350px] lg:w-1/3 h-[350px] mx-auto mb-4 sm:mb-0">
             <img
               className="absolute inset-0 w-full h-full object-cover rounded-md shadow-md"
               src={Poster}
@@ -94,14 +94,14 @@ const MovieDetailsModal = ({
           </div>
 
           {/* Movie Details */}
-          <div className="flex flex-col  w-full lg:w-2/3 ml-0 lg:pl-6 sm:ml-4 text-gray-700">
+          <div className="flex flex-col w-full lg:w-2/3 ml-0 sm:ml-4 lg:pl-6 text-gray-700 dark:text-gray-300">
             {/* Genres */}
             <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-4">
               {Genre
                 ? Genre.split(", ").map((genre, index) => (
                     <span
                       key={index}
-                      className="border border-gray-300 bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs lg:text-sm"
+                      className="border border-gray-300 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full text-xs lg:text-sm"
                     >
                       {genre}
                     </span>

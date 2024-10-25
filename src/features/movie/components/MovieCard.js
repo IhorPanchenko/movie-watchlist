@@ -37,7 +37,7 @@ const MovieCard = ({ movie }) => {
 
   return (
     <div
-      className="flex flex-col border rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
+      className="flex flex-col border rounded-lg p-4 bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-700"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -53,25 +53,25 @@ const MovieCard = ({ movie }) => {
 
         {/* Hover overlay with movie details */}
         {isHovered && (
-          <div className="absolute inset-0 bg-black text-center bg-opacity-60 flex flex-col items-center justify-center rounded-md text-white p-4">
-            <h2 className="text-xl font-semibold mb-4">{Title}</h2>
-            <p className="text-base mb-2">
+          <div className="absolute inset-0 flex flex-col items-center justify-center rounded-md p-4 bg-black bg-opacity-60 dark:bg-gray-900 text-center text-white">
+            <h2 className="mb-4 text-xl font-semibold">{Title}</h2>
+            <p className="mb-2 text-base">
               <strong>Year:</strong> {Year}
             </p>
-            <p className="text-base mb-2">
+            <p className="mb-2 text-base">
               <strong>Director:</strong> {Director || "N/A"}
             </p>
-            <p className="text-base mb-4">
+            <p className="mb-4 text-base">
               <strong>Cast:</strong> {Actors || "N/A"}
             </p>
 
-            <div className="flex space-x-2 mt-4">
+            <div className="mt-4 flex space-x-2">
               {/* Button to toggle watchlist status */}
               <button
-                className={`p-2 rounded-full transition flex items-center justify-center ${
+                className={`flex items-center justify-center p-2 rounded-full transition ${
                   isInWatchlist
-                    ? "bg-red-600 hover:bg-red-700 border border-red-400"
-                    : "bg-green-600 hover:bg-green-700 border border-green-400"
+                    ? "bg-red-600 border border-red-400 hover:bg-red-700"
+                    : "bg-green-600 border border-green-400 hover:bg-green-700"
                 }`}
                 onClick={handleToggleWatchlist}
                 aria-label={
@@ -80,18 +80,18 @@ const MovieCard = ({ movie }) => {
               >
                 {/* Icon for adding/removing movie from watchlist */}
                 {isInWatchlist ? (
-                  <FaTrash className="text-white text-2xl" />
+                  <FaTrash className="text-2xl text-white" />
                 ) : (
-                  <FaPlus className="text-white text-2xl" />
+                  <FaPlus className="text-2xl text-white" />
                 )}
               </button>
 
               {/* Button to view more details about the movie */}
               <button
-                className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-500 transition flex items-center justify-center border border-blue-400"
+                className="bg-blue-600 dark:bg-blue-500 text-white p-2 border border-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition"
                 onClick={handleDetailsClick}
               >
-                <FaInfoCircle className="text-gray-300 text-2xl" />
+                <FaInfoCircle className="text-2xl text-gray-300" />
               </button>
             </div>
           </div>

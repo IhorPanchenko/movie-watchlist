@@ -9,10 +9,12 @@ import "./index.css";
 function App() {
   return (
     <Provider store={store}>
-      <div className="p-4 max-w-6xl mx-auto">
-        <ToastContainer />
-        <MovieSearch />
-        <Watchlist />
+      <div className="bg-white dark:bg-gray-900">
+        <div className="p-4 max-w-6xl mx-auto">
+          <ToastContainer />
+          <MovieSearch />
+          <Watchlist />
+        </div>
       </div>
     </Provider>
   );
