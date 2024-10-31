@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../../api/movieApi";
 import { addMovieToWatchlist } from "../redux/movieSlice";
@@ -12,25 +12,31 @@ const MovieSearch = () => {
     (state) => state.movies
   );
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      dispatch(fetchMovies(searchTerm));
-      setSearchTerm("");
-    }
-  };
+  const handleSearch = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (searchTerm.trim()) {
+        dispatch(fetchMovies(searchTerm));
+        setSearchTerm("");
+      }
+    },
+    [dispatch, searchTerm]
+  );
 
-  const handleAddToWatchlist = (movie) => {
-    const isInWatchlist = watchlist.some(
-      (item) => item.imdbID === movie.imdbID
-    );
+  const handleAddToWatchlist = useCallback(
+    (movie) => {
+      const isInWatchlist = watchlist.some(
+        (item) => item.imdbID === movie.imdbID
+      );
 
-    if (!isInWatchlist) {
-      dispatch(addMovieToWatchlist(movie));
-    } else {
-      alert("This movie is already in your watchlist.");
-    }
-  };
+      if (!isInWatchlist) {
+        dispatch(addMovieToWatchlist(movie));
+      } else {
+        alert("This movie is already in your watchlist.");
+      }
+    },
+    [dispatch, watchlist]
+  );
 
   return (
     <div>
