@@ -17,12 +17,8 @@ const MovieCard = React.memo(({ movie }) => {
   const isInWatchlist = watchlist.some((item) => item.imdbID === movie.imdbID);
   const { Title, Year, Director, Actors, Poster } = movie;
 
-  const handleDetailsClick = useCallback(() => {
-    setIsModalOpen(true);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false);
+  const toggleModal = useCallback(() => {
+    setIsModalOpen((prev) => !prev);
   }, []);
 
   const handleToggleWatchlist = useCallback(() => {
@@ -89,7 +85,7 @@ const MovieCard = React.memo(({ movie }) => {
               {/* Button to view more details about the movie */}
               <button
                 className="bg-blue-600 dark:bg-blue-500 text-white p-2 border border-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition"
-                onClick={handleDetailsClick}
+                onClick={toggleModal}
               >
                 <FaInfoCircle className="text-2xl text-gray-300" />
               </button>
@@ -101,7 +97,7 @@ const MovieCard = React.memo(({ movie }) => {
           <MovieDetailsModal
             movie={movie}
             handleToggleWatchlist={handleToggleWatchlist}
-            onClose={handleCloseModal}
+            onClose={toggleModal}
             isInWatchlist={isInWatchlist}
           />
         )}
