@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
@@ -9,7 +9,7 @@ import {
   removeMovieFromWatchlist,
 } from "../redux/movieSlice";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = React.memo(({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
@@ -108,7 +108,7 @@ const MovieCard = ({ movie }) => {
       </div>
     </div>
   );
-};
+});
 
 MovieCard.propTypes = {
   movie: PropTypes.shape({

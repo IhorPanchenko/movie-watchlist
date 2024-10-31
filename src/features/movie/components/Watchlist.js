@@ -2,14 +2,18 @@ import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import MovieCard from "./MovieCard";
 import { removeMovieFromWatchlist } from "../redux/movieSlice";
+import { useCallback } from "react";
 
 const Watchlist = () => {
   const { watchlist } = useSelector((state) => state.movies);
   const dispatch = useDispatch();
 
-  const handleRemoveFromWatchlist = (imdbID) => {
-    dispatch(removeMovieFromWatchlist(imdbID));
-  };
+  const handleRemoveFromWatchlist = useCallback(
+    (imdbID) => {
+      dispatch(removeMovieFromWatchlist(imdbID));
+    },
+    [dispatch]
+  );
 
   return (
     <div>

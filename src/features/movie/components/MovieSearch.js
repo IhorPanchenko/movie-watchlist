@@ -4,6 +4,7 @@ import { fetchMovies } from "../../../api/movieApi";
 import { addMovieToWatchlist } from "../redux/movieSlice";
 import SearchInput from "./SearchInput";
 import MovieCard from "./MovieCard";
+
 const MovieSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
