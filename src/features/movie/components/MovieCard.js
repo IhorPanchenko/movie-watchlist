@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
@@ -14,8 +14,12 @@ const MovieCard = React.memo(({ movie }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const watchlist = useSelector((state) => state.movies.watchlist);
-  const isInWatchlist = watchlist.some((item) => item.imdbID === movie.imdbID);
   const { Title, Year, Director, Actors, Poster } = movie;
+
+  const isInWatchlist = useMemo(
+    () => watchlist.some((item) => item.imdbID === movie.imdbID),
+    [watchlist, movie.imdbID]
+  );
 
   const toggleModal = useCallback(() => {
     setIsModalOpen((prev) => !prev);
