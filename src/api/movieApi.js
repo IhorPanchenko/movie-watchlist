@@ -1,62 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// const apiKey = process.env.REACT_APP_OMDB_API_KEY;
-// const baseUrl = "http://www.omdbapi.com/";
-
-// const tmdbApiKey = "c0302fc993c05d082beda75ef164d89f";
-// const tmdbBaseUrl = "https://api.themoviedb.org/3";
-
-// const fetchFromApi = async (url) => {
-//   const response = await fetch(url);
-//   if (!response.ok) {
-//     throw new Error("Network response was not ok");
-//   }
-//   return response.json();
-// };
-
-// export const fetchMovies = createAsyncThunk(
-//   "movies/fetchMovies",
-//   async (searchTerm, { rejectWithValue }) => {
-//     try {
-//       const moviesUrl = `${baseUrl}?apikey=${apiKey}&s=${searchTerm}`;
-//       const { Search, Response, Error } = await fetchFromApi(moviesUrl);
-
-//       if (Response === "False") {
-//         throw new Error(Error);
-//       }
-
-//       const moviesWithDetails = await Promise.all(
-//         Search.map(async (movie) => {
-//           const detailUrl = `${baseUrl}?apikey=${apiKey}&i=${movie.imdbID}`;
-//           const detailData = await fetchFromApi(detailUrl);
-//           return { ...movie, ...detailData };
-//         })
-//       );
-
-//       return moviesWithDetails;
-//     } catch (error) {
-//       console.log("Fetch movies failed:", error);
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-// export const fetchUpcomingMovies = createAsyncThunk(
-//   "movies/fetchUpcomingMovies",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const upcomingMoviesUrl = `${tmdbBaseUrl}/movie/upcoming?api_key=${tmdbApiKey}&language=en-US&region=US`;
-//       const { results } = await fetchFromApi(upcomingMoviesUrl);
-//       return results;
-//     } catch (error) {
-//       console.log("Fetch upcoming movies failed:", error);
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-const tmdbApiKey = "c0302fc993c05d082beda75ef164d89f"; // Your TMDb API Key
-const tmdbBaseUrl = "https://api.themoviedb.org/3"; // TMDb Base URL
+const tmdbApiKey = process.env.REACT_APP_TMDB_API_KEY;
+const tmdbBaseUrl = "https://api.themoviedb.org/3";
 
 const fetchFromApi = async (url) => {
   const response = await fetch(url);
