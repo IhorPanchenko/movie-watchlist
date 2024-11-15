@@ -40,7 +40,7 @@ const MovieCard = React.memo(({ movie }) => {
 
   return (
     <div
-      className="flex flex-col border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-700"
+      className="flex flex-col mx-auto w-[85%] sm:w-full border rounded-lg p-4 shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-700"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -66,7 +66,7 @@ const MovieCard = React.memo(({ movie }) => {
           />
         )}
 
-        {/* Modal widnow with movie details */}
+        {/* Modal window with movie details */}
         {isModalOpen && (
           <MovieDetailsModal
             movie={movie}

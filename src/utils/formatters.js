@@ -1,7 +1,10 @@
 export const formatRuntime = (runtime) => {
   if (!runtime || runtime <= 0) return "N/A";
-  const hours = Math.floor(runtime / 60);
-  const minutes = runtime % 60;
+  const runtimeNumber = Number(runtime);
+  const hours = Math.floor(runtimeNumber / 60);
+  const minutes = runtimeNumber % 60;
+
+  if (hours === 0) return `${minutes} min`;
   return `${hours} hr ${minutes} min`;
 };
 
@@ -20,7 +23,7 @@ export const truncateText = (text, maxLength = 50) => {
 
 export const formatVoteCount = (voteCount) => {
   if (voteCount >= 1000) {
-    return `${Math.round(voteCount / 100) / 10}k`;
+    return `${(voteCount / 1000).toFixed(1)}k`;
   }
   return voteCount;
 };
