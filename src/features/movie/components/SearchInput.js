@@ -24,7 +24,7 @@ const SearchInput = React.memo(
           </label>
           <input
             id="movie-search"
-            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 p-3 rounded-lg w-full md:w-auto flex-grow md:flex-grow-0 mb-4 md:mb-0"
+            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 p-3 rounded-lg w-full md:w-1/2 flex-grow md:flex-grow-0 mb-4 md:mb-0"
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}

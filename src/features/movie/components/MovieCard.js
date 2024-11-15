@@ -8,6 +8,11 @@ import {
   addMovieToWatchlist,
   removeMovieFromWatchlist,
 } from "../redux/movieSlice";
+import {
+  formatDate,
+  formatRuntime,
+  truncateText,
+} from "../../../utils/formatters";
 
 const MovieCard = React.memo(({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -61,12 +66,18 @@ const MovieCard = React.memo(({ movie }) => {
 
         {/* Hover overlay with movie details */}
         {isHovered && (
-          <div className="absolute inset-0 flex flex-col items-center rounded-md p-4 bg-black bg-opacity-50 text-center text-gray-200">
-            <div className="flex flex-wrap gap-2 mb-4">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-md p-4 bg-black bg-opacity-50 text-center text-gray-200">
+            <p>
+              <span className="font-bold italic">
+                {formatDate(release_date)}
+              </span>
+            </p>
+
+            <div className="flex flex-wrap gap-2 my-3">
               {genres
-                ? genres.map((genre, index) => (
+                ? genres.slice(0, 2).map((genre) => (
                     <span
-                      key={index}
+                      key={genre.name}
                       className="border border-gray-300 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 p-1 rounded-full text-xs md:text-sm"
                     >
                       {genre.name}
@@ -74,12 +85,10 @@ const MovieCard = React.memo(({ movie }) => {
                   ))
                 : "N/A"}
             </div>
-            <p className="mb-2 text-base">
-              <strong>Release Date:</strong> {release_date}
-            </p>
-            <p>{runtime}</p>
 
-            <div className="mt-4 flex space-x-2">
+            <p className="">{formatRuntime(runtime)}</p>
+
+            <div className="mt-4 flex gap-4">
               {/* Button to toggle watchlist status */}
               <button
                 className={`flex items-center justify-center p-2 rounded-full transition ${
@@ -101,7 +110,7 @@ const MovieCard = React.memo(({ movie }) => {
 
               {/* Button to view more details about the movie */}
               <button
-                className="bg-blue-600 dark:bg-blue-500 text-white p-2 border border-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition"
+                className="bg-blue-600 text-white p-2 border border-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition"
                 onClick={toggleModal}
               >
                 <FaInfoCircle className="text-2xl text-gray-300" />
@@ -121,8 +130,8 @@ const MovieCard = React.memo(({ movie }) => {
       </div>
 
       {/* Movie title */}
-      <div className="mt-4 flex justify-between items-center dark:text-gray-200">
-        <h3 className="font-semibold text-xl">{title}</h3>
+      <div className="mt-4 flex justify-between items-center text-gray-800 dark:text-gray-200">
+        <h3 className="font-semibold text-xl">{truncateText(title, 15)}</h3>
         <span>{vote_average} / 10</span>
       </div>
     </div>
