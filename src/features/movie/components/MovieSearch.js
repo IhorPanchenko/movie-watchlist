@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../../api/movieApi";
 import { addMovieToWatchlist } from "../redux/movieSlice";
 import SearchInput from "./SearchInput";
-import MovieCard from "./MovieCard";
+import MovieCard from "./MovieCard/MovieCard";
 import UpcomingMovies from "./UpcomingMovies";
 
 const MovieSearch = () => {

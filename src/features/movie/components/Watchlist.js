@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import MovieCard from "./MovieCard";
+import MovieCard from "./MovieCard/MovieCard";
 import { removeMovieFromWatchlist } from "../redux/movieSlice";
 import { useCallback } from "react";
 

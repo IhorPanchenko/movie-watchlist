@@ -42,7 +42,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUpcomingMovies } from "../../../api/movieApi";
-import MovieCard from "./MovieCard";
+import MovieCard from "./MovieCard/MovieCard";
 
 const UpcomingMovies = () => {
   const dispatch = useDispatch();
