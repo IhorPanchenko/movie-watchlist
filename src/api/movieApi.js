@@ -11,11 +11,14 @@ const fetchFromApi = async (url) => {
   return response.json();
 };
 
-// Fetch movies by search term (using TMDb)
+// Fetch movies by search term
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
   async (searchTerm, { rejectWithValue }) => {
     try {
+      // Normalize the search term by trimming and converting to lowercase
+      const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+
       // Fetch the list of movies based on the search term
       const moviesUrl = `${tmdbBaseUrl}/search/movie?api_key=${tmdbApiKey}&query=${searchTerm}&language=en-US`;
       const { results: movies, total_results } = await fetchFromApi(moviesUrl);
@@ -24,9 +27,14 @@ export const fetchMovies = createAsyncThunk(
         throw new Error("No movies found");
       }
 
+      const moviesWithPostersAndMatchingTitles = movies.filter((movie) => {
+        const movieTitle = movie.title.toLowerCase();
+        return movie.poster_path && movieTitle.includes(normalizedSearchTerm);
+      });
+
       // Fetch details for each movie in parallel
       const moviesWithDetails = await Promise.all(
-        movies.map(async (movie) => {
+        moviesWithPostersAndMatchingTitles.map(async (movie) => {
           const detailUrl = `${tmdbBaseUrl}/movie/${movie.id}?api_key=${tmdbApiKey}&language=en-US`;
           const creditsUrl = `${tmdbBaseUrl}/movie/${movie.id}/credits?api_key=${tmdbApiKey}`;
 
@@ -45,7 +53,6 @@ export const fetchMovies = createAsyncThunk(
           return { ...movie, ...movieDetails, directors, actors };
         })
       );
-      console.log("Movies with details:", moviesWithDetails);
 
       return moviesWithDetails;
     } catch (error) {
@@ -55,7 +62,7 @@ export const fetchMovies = createAsyncThunk(
   }
 );
 
-// Fetch upcoming movies (using TMDb)
+// Fetch upcoming movies
 export const fetchUpcomingMovies = createAsyncThunk(
   "movies/fetchUpcomingMovies",
   async (_, { rejectWithValue }) => {
