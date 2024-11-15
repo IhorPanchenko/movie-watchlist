@@ -4,9 +4,11 @@ import { fetchMovies } from "../../../api/movieApi";
 import { addMovieToWatchlist } from "../redux/movieSlice";
 import SearchInput from "./SearchInput";
 import MovieCard from "./MovieCard";
+import UpcomingMovies from "./UpcomingMovies";
 
 const MovieSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
   const dispatch = useDispatch();
   const { watchlist, movies, loading, error } = useSelector(
     (state) => state.movies
@@ -17,7 +19,7 @@ const MovieSearch = () => {
       e.preventDefault();
       if (searchTerm.trim()) {
         dispatch(fetchMovies(searchTerm));
-        setSearchTerm("");
+        setHasSearched(true);
       }
     },
     [dispatch, searchTerm]
@@ -50,12 +52,14 @@ const MovieSearch = () => {
       {loading && <p className="text-center text-gray-500">Loading...</p>}
 
       {error && <p className="text-center text-red-500">{error}</p>}
+      {/* <UpcomingMovies /> */}
 
-      {movies.length > 0 && !loading && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      {/* {!loading && !hasSearched && movies.length === 0 && <h2>Search Results</h2> */}
+      {!loading && movies.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
           {movies.map((movie) => (
             <MovieCard
-              key={movie.imdbID}
+              key={movie.id}
               movie={movie}
               onAddToWatchlist={handleAddToWatchlist}
             />

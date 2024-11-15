@@ -5,20 +5,17 @@ import { FaPlus, FaTrash, FaTimes } from "react-icons/fa";
 const MovieDetailsModal = React.memo(
   ({
     movie: {
-      Title,
-      Year,
-      Rated,
-      Runtime,
-      Metascore,
-      imdbRating,
-      Poster,
-      Genre,
-      Plot,
-      Director,
-      Writer,
-      Actors,
-      Country,
-      Awards,
+      title,
+      release_date,
+      runtime,
+      vote_average,
+      vote_count,
+      poster_path,
+      directors,
+      actors,
+      genres,
+      overview,
+      origin_country,
     },
     onClose,
     handleToggleWatchlist,
@@ -26,7 +23,7 @@ const MovieDetailsModal = React.memo(
   }) => {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm z-50">
-        <div className="bg-white dark:bg-gray-800 p-3 lg:p-4 rounded-lg w-full max-w-[400px] sm:max-w-xl lg:max-w-3xl max-h-[800px] relative shadow-lg dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 p-3 lg:p-4 rounded-lg w-full max-w-[350px] xxs:max-w-[400px] laptop:max-w-3xl max-h-[800px] relative shadow-lg dark:border-gray-700">
           {/* Toggle Button */}
           <button
             onClick={handleToggleWatchlist}
@@ -58,75 +55,72 @@ const MovieDetailsModal = React.memo(
           <div className="flex lg:flex-row justify-between items-baseline mb-4">
             <div className="w-full lg:w-3/4">
               <h2 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                {Title}
+                {title}
               </h2>
               <div className="flex text-gray-600 dark:text-gray-400">
-                <span>{Year}</span>
+                {/* Only show the year */}
+                <span>{release_date?.split("-")[0]}</span>{" "}
                 <div className="mx-2 my-auto w-1 h-1 bg-gray-500 rounded-full"></div>
-                <span>{Rated}</span>
+                <span>{runtime} mins</span>
                 <div className="mx-2 my-auto w-1 h-1 bg-gray-500 rounded-full"></div>
-                <span>{Runtime}</span>
+                <span>{origin_country}</span>
               </div>
             </div>
 
             {/* Ratings Section */}
-            <div className="w-2/4 lg:w-1/4 flex items-center justify-between mt-0 lg:mt-4 text-center text-gray-800 dark:text-gray-300">
+            <div className="w-2/4 laptop:w-[40%] flex items-center justify-between mt-0 lg:mt-4 text-center text-gray-800 dark:text-gray-300">
               <div>
-                <div className="text-sm lg:text-base font-semibold">
-                  Metascore
+                <div className="text-sm laptop:text-base font-semibold">
+                  User Score
                 </div>
-                <div className="text-xs lg:text-sm">{Metascore}%</div>
+                <div className="text-xs laptop:text-sm">{vote_average}/10</div>
               </div>
               <div>
-                <div className="text-sm lg:text-base font-semibold">IMDb</div>
-                <div className="text-xs lg:text-sm">{imdbRating}/10</div>
+                <div className="text-sm laptop:text-base font-semibold">
+                  Total Votes
+                </div>
+                <div className="text-xs laptop:text-sm">{vote_count}</div>
               </div>
             </div>
           </div>
 
           {/* Movie Content */}
-          <div className="flex flex-col sm:flex-row">
+          <div className="flex flex-col laptop:flex-row">
             {/* Poster */}
-            <div className="relative w-[350px] lg:w-1/3 h-[350px] mx-auto mb-4 sm:mb-0">
+            <div className="relative w-[90%] lg:w-[35%] h-[350px] mx-auto mb-4 hidden xxs:block laptop:mb-0">
               <img
                 className="absolute inset-0 w-full h-full object-cover rounded-md shadow-md"
-                src={Poster}
-                alt={`${Title} poster`}
+                src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+                alt={`${title} poster`}
               />
             </div>
 
             {/* Movie Details */}
-            <div className="flex flex-col w-full lg:w-2/3 ml-0 sm:ml-4 lg:pl-6 text-gray-700 dark:text-gray-300">
+            <div className="flex flex-col w-full lg:w-2/3 ml-0 laptop:ml-4 lg:pl-3 text-gray-700 dark:text-gray-300">
               {/* Genres */}
-              <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-4">
-                {Genre
-                  ? Genre.split(", ").map((genre, index) => (
+              <div className="flex flex-wrap justify-center laptop:justify-start gap-2 mb-4">
+                {genres
+                  ? genres.map((genre, index) => (
                       <span
                         key={index}
-                        className="border border-gray-300 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full text-xs lg:text-sm"
+                        className="border border-gray-300 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full text-xs md:text-sm"
                       >
-                        {genre}
+                        {genre.name}
                       </span>
                     ))
                   : "N/A"}
               </div>
 
-              {/* Additional Info */}
-              <p className="text-sm lg:text-base mb-3">{Plot || "N/A"}</p>
-              <p className="text-sm lg:text-base mb-2">
-                <strong>Director:</strong> {Director || "N/A"}
+              {/* Overview */}
+              <p className="text-sm laptop:text-base mb-3">
+                {overview || "N/A"}
               </p>
-              <p className="text-sm lg:text-base mb-2">
-                <strong>Writer:</strong> {Writer || "N/A"}
+              <p className="text-sm laptop:text-base mb-2">
+                <strong>Director{directors.length > 1 ? "s" : ""}:</strong>{" "}
+                {directors?.join(", ") || "N/A"}
               </p>
-              <p className="text-sm lg:text-base mb-2">
-                <strong>Cast:</strong> {Actors || "N/A"}
-              </p>
-              <p className="text-sm lg:text-base mb-2">
-                <strong>Country:</strong> {Country || "N/A"}
-              </p>
-              <p className="text-sm lg:text-base mb-2">
-                <strong>Awards:</strong> {Awards || "N/A"}
+              <p className="text-sm laptop:text-base mb-2">
+                <strong>Cast: </strong> {actors?.join(", ") || "N/A"}
               </p>
             </div>
           </div>
@@ -137,22 +131,6 @@ const MovieDetailsModal = React.memo(
 );
 
 MovieDetailsModal.propTypes = {
-  movie: PropTypes.shape({
-    Title: PropTypes.string.isRequired,
-    Year: PropTypes.string,
-    Rated: PropTypes.string,
-    Runtime: PropTypes.string,
-    Metascore: PropTypes.string,
-    imdbRating: PropTypes.string,
-    Poster: PropTypes.string,
-    Genre: PropTypes.string,
-    Plot: PropTypes.string,
-    Director: PropTypes.string,
-    Writer: PropTypes.string,
-    Actors: PropTypes.string,
-    Country: PropTypes.string,
-    Awards: PropTypes.string,
-  }).isRequired,
   onClose: PropTypes.func.isRequired,
   handleToggleWatchlist: PropTypes.func.isRequired,
   isInWatchlist: PropTypes.bool.isRequired,

@@ -14,11 +14,12 @@ const MovieCard = React.memo(({ movie }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const watchlist = useSelector((state) => state.movies.watchlist);
-  const { Title, Year, Director, Actors, Poster } = movie;
+  const { title, release_date, poster_path, runtime, genres, vote_average } =
+    movie;
 
   const isInWatchlist = useMemo(
-    () => watchlist.some((item) => item.imdbID === movie.imdbID),
-    [watchlist, movie.imdbID]
+    () => watchlist.some((item) => item.id === movie.id),
+    [watchlist, movie.id]
   );
 
   const toggleModal = useCallback(() => {
@@ -27,17 +28,24 @@ const MovieCard = React.memo(({ movie }) => {
 
   const handleToggleWatchlist = useCallback(() => {
     if (isInWatchlist) {
-      dispatch(removeMovieFromWatchlist(movie.imdbID));
-      toast.error(`${Title} has been removed from your watchlist!`);
+      dispatch(removeMovieFromWatchlist(movie.id));
+      toast.error(`${title} has been removed from your watchlist!`);
     } else {
       dispatch(addMovieToWatchlist(movie));
-      toast.success(`${Title} has been added to your watchlist!`);
+      toast.success(`${title} has been added to your watchlist!`);
     }
-  }, [dispatch, isInWatchlist, movie, Title]);
+  }, [dispatch, isInWatchlist, movie, title]);
+
+  const truncateOverview = (overview, maxLength = 150) => {
+    if (overview && overview.length > maxLength) {
+      return overview.substring(0, maxLength) + "...";
+    }
+    return overview;
+  };
 
   return (
     <div
-      className="flex flex-col border rounded-lg p-4 bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-700"
+      className="flex flex-col border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-700"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -47,23 +55,29 @@ const MovieCard = React.memo(({ movie }) => {
           className={`absolute inset-0 w-full h-full object-cover rounded-md transition-opacity duration-300 ease-in-out ${
             isHovered ? "opacity-50" : "opacity-100"
           }`}
-          src={Poster}
-          alt={`${Title} poster`}
+          src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+          alt={`${title} poster`}
         />
 
         {/* Hover overlay with movie details */}
         {isHovered && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center rounded-md p-4 bg-black bg-opacity-60 dark:bg-gray-900 text-center text-white">
-            <h2 className="mb-4 text-xl font-semibold">{Title}</h2>
+          <div className="absolute inset-0 flex flex-col items-center rounded-md p-4 bg-black bg-opacity-50 text-center text-gray-200">
+            <div className="flex flex-wrap gap-2 mb-4">
+              {genres
+                ? genres.map((genre, index) => (
+                    <span
+                      key={index}
+                      className="border border-gray-300 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 p-1 rounded-full text-xs md:text-sm"
+                    >
+                      {genre.name}
+                    </span>
+                  ))
+                : "N/A"}
+            </div>
             <p className="mb-2 text-base">
-              <strong>Year:</strong> {Year}
+              <strong>Release Date:</strong> {release_date}
             </p>
-            <p className="mb-2 text-base">
-              <strong>Director:</strong> {Director || "N/A"}
-            </p>
-            <p className="mb-4 text-base">
-              <strong>Cast:</strong> {Actors || "N/A"}
-            </p>
+            <p>{runtime}</p>
 
             <div className="mt-4 flex space-x-2">
               {/* Button to toggle watchlist status */}
@@ -78,7 +92,6 @@ const MovieCard = React.memo(({ movie }) => {
                   isInWatchlist ? "Remove from watchlist" : "Add to watchlist"
                 }
               >
-                {/* Icon for adding/removing movie from watchlist */}
                 {isInWatchlist ? (
                   <FaTrash className="text-2xl text-white" />
                 ) : (
@@ -106,18 +119,23 @@ const MovieCard = React.memo(({ movie }) => {
           />
         )}
       </div>
+
+      {/* Movie title */}
+      <div className="mt-4 flex justify-between items-center dark:text-gray-200">
+        <h3 className="font-semibold text-xl">{title}</h3>
+        <span>{vote_average} / 10</span>
+      </div>
     </div>
   );
 });
 
 MovieCard.propTypes = {
   movie: PropTypes.shape({
-    imdbID: PropTypes.string.isRequired,
-    Poster: PropTypes.string.isRequired,
-    Title: PropTypes.string.isRequired,
-    Year: PropTypes.string.isRequired,
-    Director: PropTypes.string,
-    Actors: PropTypes.string,
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    release_date: PropTypes.string,
+    overview: PropTypes.string,
+    poster_path: PropTypes.string,
   }).isRequired,
 };
 
