@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 import { FaInfoCircle, FaPlus, FaTrash } from "react-icons/fa";
-import { formatDate, formatRuntime } from "../../../../utils/formatters";
+import {
+  formatDate,
+  formatGenres,
+  formatRuntime,
+} from "../../../../utils/formatters";
 
 const HoverOverlay = ({
   releaseDate,
@@ -16,18 +20,7 @@ const HoverOverlay = ({
     </p>
 
     {/* Displaying the first two genres */}
-    <div className="flex flex-wrap gap-2 my-3">
-      {genres
-        ? genres.slice(0, 2).map((genre) => (
-            <span
-              key={genre.name}
-              className="border border-gray-300 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full text-xs md:text-sm"
-            >
-              {genre.name}
-            </span>
-          ))
-        : "N/A"}
-    </div>
+    <div className="flex flex-wrap gap-2 my-3">{formatGenres(genres)}</div>
 
     <p>{formatRuntime(runtime)}</p>
 

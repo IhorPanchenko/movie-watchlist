@@ -1,6 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FaPlus, FaTrash, FaTimes } from "react-icons/fa";
+import {
+  formatRuntime,
+  truncateText,
+  formatVoteCount,
+  formatGenres,
+} from "../../../utils/formatters";
 
 const MovieDetailsModal = React.memo(
   ({
@@ -23,7 +29,7 @@ const MovieDetailsModal = React.memo(
   }) => {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm z-50">
-        <div className="bg-white dark:bg-gray-800 p-3 lg:p-4 rounded-lg w-full max-w-[350px] xxs:max-w-[400px] laptop:max-w-3xl max-h-[800px] relative shadow-lg dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg w-full max-w-[350px] xxs:max-w-[400px] laptop:max-w-3xl max-h-[800px] relative shadow-lg dark:border-gray-700">
           {/* Toggle Button */}
           <button
             onClick={handleToggleWatchlist}
@@ -61,25 +67,27 @@ const MovieDetailsModal = React.memo(
                 {/* Only show the year */}
                 <span>{release_date?.split("-")[0]}</span>{" "}
                 <div className="mx-2 my-auto w-1 h-1 bg-gray-500 rounded-full"></div>
-                <span>{runtime} mins</span>
+                <span>{formatRuntime(runtime)}</span>
                 <div className="mx-2 my-auto w-1 h-1 bg-gray-500 rounded-full"></div>
                 <span>{origin_country}</span>
               </div>
             </div>
 
             {/* Ratings Section */}
-            <div className="w-2/4 laptop:w-[40%] flex items-center justify-between mt-0 lg:mt-4 text-center text-gray-800 dark:text-gray-300">
+            <div className="w-2/4 laptop:w-[20%] flex items-center justify-between mt-0 lg:mt-4 text-center text-gray-800 dark:text-gray-300">
               <div>
                 <div className="text-sm laptop:text-base font-semibold">
-                  User Score
+                  Score
                 </div>
                 <div className="text-xs laptop:text-sm">{vote_average}/10</div>
               </div>
               <div>
                 <div className="text-sm laptop:text-base font-semibold">
-                  Total Votes
+                  Voters
                 </div>
-                <div className="text-xs laptop:text-sm">{vote_count}</div>
+                <div className="text-xs laptop:text-sm">
+                  {formatVoteCount(vote_count)}
+                </div>
               </div>
             </div>
           </div>
@@ -87,7 +95,7 @@ const MovieDetailsModal = React.memo(
           {/* Movie Content */}
           <div className="flex flex-col laptop:flex-row">
             {/* Poster */}
-            <div className="relative w-[90%] lg:w-[35%] h-[350px] mx-auto mb-4 hidden xxs:block laptop:mb-0">
+            <div className="relative w-[90%] laptop:w-1/3 h-[350px] mx-auto mb-4 hidden xxs:block laptop:mb-0">
               <img
                 className="absolute inset-0 w-full h-full object-cover rounded-md shadow-md"
                 src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
@@ -96,24 +104,15 @@ const MovieDetailsModal = React.memo(
             </div>
 
             {/* Movie Details */}
-            <div className="flex flex-col w-full lg:w-2/3 ml-0 laptop:ml-4 lg:pl-3 text-gray-700 dark:text-gray-300">
+            <div className="flex flex-col w-full laptop:w-2/3 ml-0 laptop:ml-4 laptop:pl-3 text-gray-700 dark:text-gray-300">
               {/* Genres */}
               <div className="flex flex-wrap justify-center laptop:justify-start gap-2 mb-4">
-                {genres
-                  ? genres.map((genre, index) => (
-                      <span
-                        key={index}
-                        className="border border-gray-300 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full text-xs md:text-sm"
-                      >
-                        {genre.name}
-                      </span>
-                    ))
-                  : "N/A"}
+                {formatGenres(genres, 3)}
               </div>
 
               {/* Overview */}
               <p className="text-sm laptop:text-base mb-3">
-                {overview || "N/A"}
+                {truncateText(overview, 460) || "N/A"}
               </p>
               <p className="text-sm laptop:text-base mb-2">
                 <strong>Director{directors.length > 1 ? "s" : ""}:</strong>{" "}
