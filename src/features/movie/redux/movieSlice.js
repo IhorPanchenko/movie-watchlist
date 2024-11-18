@@ -4,7 +4,6 @@ import { fetchMovies } from "../../../api/movieApi";
 const initialState = {
   watchlist: JSON.parse(localStorage.getItem("watchlist")) || [],
   movies: [],
-  upcomingMovies: [],
   loading: false,
   error: null,
 };
