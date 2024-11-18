@@ -40,3 +40,10 @@ export const formatGenres = (genres, sliceCount = 2) => {
     </span>
   ));
 };
+
+export const formatCountry = (country, defaultValue = "N/A") => {
+  if (Array.isArray(country) && country.length > 0) {
+    return <span>{country[0]}</span>;
+  }
+  return defaultValue;
+};

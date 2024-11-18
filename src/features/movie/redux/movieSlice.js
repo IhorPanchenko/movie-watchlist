@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchMovies, fetchUpcomingMovies } from "../../../api/movieApi";
+import { fetchMovies } from "../../../api/movieApi";
 
 const initialState = {
   watchlist: JSON.parse(localStorage.getItem("watchlist")) || [],
@@ -45,19 +45,6 @@ const movieSlice = createSlice({
         state.movies = action.payload;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
-        state.loading = false;
-        state.error =
-          action.payload || "Something went wrong during the fetch.";
-      })
-      .addCase(fetchUpcomingMovies.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchUpcomingMovies.fulfilled, (state, action) => {
-        state.loading = false;
-        state.upcomingMovies = action.payload;
-      })
-      .addCase(fetchUpcomingMovies.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.payload || "Something went wrong during the fetch.";

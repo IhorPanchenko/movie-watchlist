@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
 import MovieCard from "./MovieCard/MovieCard";
 import { removeMovieFromWatchlist } from "../redux/movieSlice";
 import { useCallback } from "react";
@@ -38,12 +37,6 @@ const Watchlist = () => {
       )}
     </div>
   );
-};
-
-Watchlist.propTypes = {
-  watchlist: PropTypes.array,
-  loading: PropTypes.bool,
-  error: PropTypes.string,
 };
 
 export default Watchlist;

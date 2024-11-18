@@ -6,6 +6,7 @@ import {
   truncateText,
   formatVoteCount,
   formatGenres,
+  formatCountry,
 } from "../../../utils/formatters";
 
 const MovieDetailsModal = React.memo(
@@ -69,7 +70,7 @@ const MovieDetailsModal = React.memo(
                 <div className="mx-2 my-auto w-1 h-1 bg-gray-500 rounded-full"></div>
                 <span>{formatRuntime(runtime)}</span>
                 <div className="mx-2 my-auto w-1 h-1 bg-gray-500 rounded-full"></div>
-                <span>{origin_country}</span>
+                <span>{formatCountry(origin_country)}</span>
               </div>
             </div>
 
@@ -146,7 +147,7 @@ MovieDetailsModal.propTypes = {
       })
     ),
     overview: PropTypes.string,
-    origin_country: PropTypes.string,
+    origin_country: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   onClose: PropTypes.func.isRequired,
   handleToggleWatchlist: PropTypes.func.isRequired,

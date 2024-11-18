@@ -88,13 +88,13 @@ const MovieCard = React.memo(({ movie }) => {
 
 MovieCard.propTypes = {
   movie: PropTypes.shape({
-    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     release_date: PropTypes.string,
     poster_path: PropTypes.string,
     runtime: PropTypes.number,
-    genres: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string })),
     vote_average: PropTypes.number,
+    genres: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string })),
+    origin_country: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
 };
 

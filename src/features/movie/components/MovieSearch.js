@@ -1,25 +1,33 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../../api/movieApi";
 import { addMovieToWatchlist } from "../redux/movieSlice";
 import SearchInput from "./SearchInput";
 import MovieCard from "./MovieCard/MovieCard";
-import UpcomingMovies from "./UpcomingMovies";
 
 const MovieSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [hasSearched, setHasSearched] = useState(false);
+  const [isSearchResult, setIsSearchResult] = useState(false);
   const dispatch = useDispatch();
+
   const { watchlist, movies, loading, error } = useSelector(
     (state) => state.movies
   );
+
+  useEffect(() => {
+    dispatch(fetchMovies(""));
+  }, [dispatch]);
 
   const handleSearch = useCallback(
     (e) => {
       e.preventDefault();
       if (searchTerm.trim()) {
         dispatch(fetchMovies(searchTerm));
-        setHasSearched(true);
+        setIsSearchResult(true);
+        setSearchTerm("");
+      } else {
+        setIsSearchResult(false);
+        dispatch(fetchMovies(""));
       }
     },
     [dispatch, searchTerm]
@@ -27,9 +35,7 @@ const MovieSearch = () => {
 
   const handleAddToWatchlist = useCallback(
     (movie) => {
-      const isInWatchlist = watchlist.some(
-        (item) => item.imdbID === movie.imdbID
-      );
+      const isInWatchlist = watchlist.some((item) => item.id === movie.id);
 
       if (!isInWatchlist) {
         dispatch(addMovieToWatchlist(movie));
@@ -50,22 +56,29 @@ const MovieSearch = () => {
       />
 
       {loading && <p className="text-center text-gray-500">Loading...</p>}
-
       {error && <p className="text-center text-red-500">{error}</p>}
-      {/* <UpcomingMovies /> */}
 
-      {/* {!loading && !hasSearched && movies.length === 0 && <h2>Search Results</h2> */}
-      {!loading && movies.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-          {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              onAddToWatchlist={handleAddToWatchlist}
-            />
-          ))}
-        </div>
-      )}
+      <h2 className="text-2xl font-bold my-6 dark:text-gray-200">
+        {isSearchResult ? "Search Results" : "Upcoming Movies"}
+      </h2>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+        {!loading && movies.length > 0
+          ? movies.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                onAddToWatchlist={handleAddToWatchlist}
+              />
+            ))
+          : !loading && (
+              <p className="text-center text-gray-500">
+                {isSearchResult
+                  ? "No search results found."
+                  : "No upcoming movies available."}
+              </p>
+            )}
+      </div>
     </div>
   );
 };

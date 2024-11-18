@@ -11,30 +11,47 @@ const fetchFromApi = async (url) => {
   return response.json();
 };
 
-// Fetch movies by search term
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
   async (searchTerm, { rejectWithValue }) => {
     try {
-      // Normalize the search term by trimming and converting to lowercase
-      const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+      let movies = [];
+      if (searchTerm) {
+        // Normalize the search term by trimming and converting to lowercase
+        const normalizedSearchTerm = searchTerm.trim().toLowerCase();
 
-      // Fetch the list of movies based on the search term
-      const moviesUrl = `${tmdbBaseUrl}/search/movie?api_key=${tmdbApiKey}&query=${searchTerm}&language=en-US`;
-      const { results: movies, total_results } = await fetchFromApi(moviesUrl);
+        // Fetch the list of movies based on the search term
+        const moviesUrl = `${tmdbBaseUrl}/search/movie?api_key=${tmdbApiKey}&query=${searchTerm}&language=en-US`;
+        const { results: searchResults, total_results } = await fetchFromApi(
+          moviesUrl
+        );
 
-      if (!movies || total_results === 0) {
-        throw new Error("No movies found");
+        if (!searchResults || total_results === 0) {
+          throw new Error("No movies found");
+        }
+
+        // Filter results to include only those with poster_path and matching titles
+        movies = searchResults.filter((movie) => {
+          const movieTitle = movie.title.toLowerCase();
+          return movie.poster_path && movieTitle.includes(normalizedSearchTerm);
+        });
+      } else {
+        // Fetch upcoming movies if no search term is provided
+        const upcomingMoviesUrl = `${tmdbBaseUrl}/movie/upcoming?api_key=${tmdbApiKey}&language=en-US&region=US`;
+        const { results: upcomingMovies } = await fetchFromApi(
+          upcomingMoviesUrl
+        );
+
+        if (!upcomingMovies || upcomingMovies.length === 0) {
+          throw new Error("No upcoming movies found");
+        }
+
+        movies = upcomingMovies.filter((movie) => movie.poster_path);
       }
-
-      const moviesWithPostersAndMatchingTitles = movies.filter((movie) => {
-        const movieTitle = movie.title.toLowerCase();
-        return movie.poster_path && movieTitle.includes(normalizedSearchTerm);
-      });
 
       // Fetch details for each movie in parallel
       const moviesWithDetails = await Promise.all(
-        moviesWithPostersAndMatchingTitles.map(async (movie) => {
+        movies.map(async (movie) => {
           const detailUrl = `${tmdbBaseUrl}/movie/${movie.id}?api_key=${tmdbApiKey}&language=en-US`;
           const creditsUrl = `${tmdbBaseUrl}/movie/${movie.id}/credits?api_key=${tmdbApiKey}`;
 
@@ -57,21 +74,6 @@ export const fetchMovies = createAsyncThunk(
       return moviesWithDetails;
     } catch (error) {
       console.log("Fetch movies with details failed:", error);
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-// Fetch upcoming movies
-export const fetchUpcomingMovies = createAsyncThunk(
-  "movies/fetchUpcomingMovies",
-  async (_, { rejectWithValue }) => {
-    try {
-      const upcomingMoviesUrl = `${tmdbBaseUrl}/movie/upcoming?api_key=${tmdbApiKey}&language=en-US&region=US`;
-      const { results } = await fetchFromApi(upcomingMoviesUrl);
-      return results;
-    } catch (error) {
-      console.log("Fetch upcoming movies failed:", error);
       return rejectWithValue(error.message);
     }
   }
