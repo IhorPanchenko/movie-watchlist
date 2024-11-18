@@ -14,7 +14,7 @@ const SearchInput = React.memo(
     };
 
     return (
-      <div className="flex items-center mb-8 md:flex md:items-center md:justify-center">
+      <div className="flex items-center mb-8 mt-4 md:flex md:items-center md:justify-center">
         <form
           className="w-full flex flex-col md:flex-row items-center justify-center"
           onSubmit={handleSubmit}

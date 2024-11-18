@@ -130,6 +130,24 @@ const MovieDetailsModal = React.memo(
 );
 
 MovieDetailsModal.propTypes = {
+  movie: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    release_date: PropTypes.string,
+    runtime: PropTypes.number,
+    vote_average: PropTypes.number.isRequired,
+    vote_count: PropTypes.number,
+    poster_path: PropTypes.string,
+    directors: PropTypes.arrayOf(PropTypes.string),
+    actors: PropTypes.arrayOf(PropTypes.string),
+    genres: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+      })
+    ),
+    overview: PropTypes.string,
+    origin_country: PropTypes.string,
+  }).isRequired,
   onClose: PropTypes.func.isRequired,
   handleToggleWatchlist: PropTypes.func.isRequired,
   isInWatchlist: PropTypes.bool.isRequired,
