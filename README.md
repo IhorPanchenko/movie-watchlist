@@ -1,10 +1,11 @@
 # Watchlist App
 
-The **Watchlist App** allows users to search for movies using the [OMDb API](https://www.omdbapi.com/) and save them to a personal watchlist. The app is built using React and Redux, with a responsive design and clean user interface.
+The **Watchlist App** allows users to search for movies using the [TMDB API](https://www.themoviedb.org/) and save them to a personal watchlist. The app is built using React and Redux, with a responsive design and clean user interface.
 
 ## Features
 
-- **Search for Movies**: Search for movies by title using the OMDb API.
+- **Search for Movies**: Search for movies by title using the TMDB API.
+- **Upcoming Movies**: Browse and view details for upcoming movies.
 - **Movie Details**: View details such as the plot, cast, ratings, and more.
 - **Watchlist Management**: Add or remove movies from your personal watchlist.
 - **Responsive Design**: Optimized layout for both desktop and mobile screens.
@@ -54,7 +55,7 @@ Ensure you have the following installed:
    Create a `.env` file in the root of the project and add your OMDb API key:
 
    ```bash
-   REACT_APP_OMDB_API_KEY=your_api_key_here
+   REACT_APP_TMDB_API_KEY=your_api_key_here
    ```
 
 4. **Start the development server**:
