@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { FaPlus, FaTrash, FaTimes } from "react-icons/fa";
 import {
@@ -28,6 +28,14 @@ const MovieDetailsModal = React.memo(
     handleToggleWatchlist,
     isInWatchlist,
   }) => {
+    // Lock/unlock the scroll when the modal is opened
+    useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "auto";
+      };
+    }, []);
+
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm z-50">
         <div className="bg-white dark:bg-gray-800 p-4 rounded-lg w-full max-w-[350px] xxs:max-w-[400px] laptop:max-w-3xl max-h-[800px] relative shadow-lg dark:border-gray-700">
