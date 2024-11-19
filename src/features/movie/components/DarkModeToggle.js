@@ -31,7 +31,7 @@ const DarkModeToggle = () => {
   return (
     <button
       onClick={toggleDarkMode}
-      className="ml-4 p-2 rounded-full text-xl bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-800"
+      className="ml-4 p-2 rounded-full text-lg bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-800"
       aria-label="Toggle Dark Mode"
     >
       {isDarkMode ? <FaSun /> : <FaMoon />}

@@ -7,6 +7,7 @@ import MovieCard from "./MovieCard/MovieCard";
 
 const MovieSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentSearchTerm, setCurrentSearchTerm] = useState("");
   const [isSearchResult, setIsSearchResult] = useState(false);
   const dispatch = useDispatch();
 
@@ -23,10 +24,12 @@ const MovieSearch = () => {
       e.preventDefault();
       if (searchTerm.trim()) {
         dispatch(fetchMovies(searchTerm));
+        setCurrentSearchTerm(searchTerm);
         setIsSearchResult(true);
         setSearchTerm("");
       } else {
         setIsSearchResult(false);
+        setCurrentSearchTerm("");
         dispatch(fetchMovies(""));
       }
     },
@@ -59,7 +62,9 @@ const MovieSearch = () => {
       {error && <p className="text-center text-red-500">{error}</p>}
 
       <h2 className="text-2xl font-bold my-6 dark:text-gray-200">
-        {isSearchResult ? "Search Results" : "Upcoming Movies"}
+        {isSearchResult
+          ? `Search Results: ${currentSearchTerm}`
+          : "Upcoming Movies"}
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">

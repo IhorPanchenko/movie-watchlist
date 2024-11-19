@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DarkModeToggle from "./DarkModeToggle";
 
 const SearchInput = React.memo(
   ({ searchTerm, setSearchTerm, handleSearch, loading }) => {
@@ -43,7 +42,6 @@ const SearchInput = React.memo(
             {loading ? "Searching..." : "Search"}
           </button>
         </form>
-        <DarkModeToggle />
       </div>
     );
   }
