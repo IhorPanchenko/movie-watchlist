@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
@@ -11,7 +11,16 @@ import Watchlist from "./features/movie/components/Watchlist";
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <BrowserRouter
+        future={{
+          v7_fetcherPersist: true,
+          v7_normalizeFormMethod: true,
+          v7_partialHydration: true,
+          v7_relativeSplatPath: true,
+          v7_skipActionErrorRevalidation: true,
+          v7_startTransition: true,
+        }}
+      >
         <div className="min-h-screen bg-white dark:bg-gray-900">
           <Navbar />
 
@@ -23,7 +32,7 @@ function App() {
             </Routes>
           </main>
         </div>
-      </Router>
+      </BrowserRouter>
     </Provider>
   );
 }
