@@ -5,10 +5,10 @@ import DarkModeToggle from "./DarkModeToggle";
 
 const Navbar = () => {
   return (
-    <nav className="w-full z-50 p-4 fixed top-0 left-0 shadow-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
-      <div className="flex justify-between items-center px-10">
+    <nav className="fixed top-0 left-0 z-50 w-full p-4 shadow-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+      <div className="flex items-center justify-center sm:justify-between px-10">
         {/* App Title */}
-        <div className="text-xl font-bold">Watchlist App</div>
+        <div className="text-xl font-bold hidden sm:block">Watchlist App</div>
 
         {/* Navigation Links */}
         <ul className="flex items-center space-x-10">
@@ -45,6 +45,8 @@ const Navbar = () => {
               <span>Watchlist</span>
             </NavLink>
           </li>
+
+          {/* Dark Mode Toggle */}
           <DarkModeToggle />
         </ul>
       </div>

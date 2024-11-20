@@ -8,7 +8,7 @@ import {
   addMovieToWatchlist,
   removeMovieFromWatchlist,
 } from "../../redux/movieSlice";
-import { truncateText } from "../../../../utils/formatters";
+import { truncateText, formatRating } from "../../../../utils/formatters";
 
 const MovieCard = React.memo(({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -40,14 +40,14 @@ const MovieCard = React.memo(({ movie }) => {
 
   return (
     <div
-      className="flex flex-col mx-auto w-[85%] sm:w-full border rounded-lg p-4 shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-700"
+      className="mx-auto flex w-[85%] flex-col rounded-lg border p-4 shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 sm:w-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image for the movie poster */}
-      <div className="relative w-full h-0 pb-[100%] sm:pb-[150%]">
+      <div className="relative h-0 w-full pb-[100%] sm:pb-[150%]">
         <img
-          className={`absolute inset-0 w-full h-full object-cover rounded-md transition-opacity duration-300 ease-in-out ${
+          className={`absolute inset-0 h-full w-full rounded-md object-cover transition-opacity duration-300 ease-in-out ${
             isHovered ? "opacity-50" : "opacity-100"
           }`}
           src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
@@ -78,9 +78,9 @@ const MovieCard = React.memo(({ movie }) => {
       </div>
 
       {/* Movie title */}
-      <div className="mt-4 flex justify-between items-center text-gray-800 dark:text-gray-200">
-        <h3 className="font-semibold text-xl">{truncateText(title, 15)}</h3>
-        <span>{vote_average} / 10</span>
+      <div className="mt-4 flex items-center justify-between text-gray-800 dark:text-gray-200">
+        <h3 className="text-xl font-semibold">{truncateText(title, 15)}</h3>
+        <span>{formatRating(vote_average)}</span>
       </div>
     </div>
   );

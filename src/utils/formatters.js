@@ -47,3 +47,10 @@ export const formatCountry = (country, defaultValue = "N/A") => {
   }
   return defaultValue;
 };
+
+export const formatRating = (number, decimals = 1) => {
+  if (typeof number !== "number") {
+    return "N/A";
+  }
+  return `${number.toFixed(decimals)}/10`;
+};

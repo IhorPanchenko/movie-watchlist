@@ -16,11 +16,11 @@ const Watchlist = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold my-6 dark:text-gray-200">
+      <h2 className="my-6 text-2xl font-bold dark:text-gray-200">
         Your Watchlist
       </h2>
       {watchlist.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {watchlist.map((movie) => (
             <MovieCard
               key={movie.id}

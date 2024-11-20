@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import { store } from "./features/movie/redux/store/store";
-import Navbar from "./features/movie/components/Navbar";
+import Navbar from "./features/movie/components/Navbar/Navbar";
 import MovieSearch from "./features/movie/components/MovieSearch";
 import Watchlist from "./features/movie/components/Watchlist";
 
@@ -15,7 +15,7 @@ function App() {
         <div className="min-h-screen bg-white dark:bg-gray-900">
           <Navbar />
 
-          <main className="mx-auto max-w-7xl px-4 pt-20">
+          <main className="mx-auto max-w-7xl px-4 py-20">
             <ToastContainer />
             <Routes>
               <Route path="/" element={<MovieSearch />} />
