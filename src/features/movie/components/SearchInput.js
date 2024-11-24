@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 const SearchInput = React.memo(
   ({ searchTerm, setSearchTerm, handleSearch, loading }) => {
-    const [sortBy, setSortBy] = useState("rating"); // Default sorting by rating
-    const [sortOrder, setSortOrder] = useState("desc"); // Default descending order
-
     const handleSubmit = (e) => {
       e.preventDefault();
       if (!searchTerm.trim()) {
@@ -34,7 +31,7 @@ const SearchInput = React.memo(
             aria-label="Search for a movie"
           />
           <button
-            className={`bg-blue-500 dark:bg-blue-600 text-white dark:text-gray-900 p-3 rounded-lg w-full md:w-auto md:ml-4 transition-colors duration-300 ${
+            className={`bg-blue-500 dark:bg-blue-600 text-white p-3 rounded-lg w-full md:w-auto md:ml-4 transition-colors duration-300 ${
               loading
                 ? "bg-blue-400 dark:bg-blue-500 cursor-not-allowed"
                 : "hover:bg-blue-600 dark:hover:bg-blue-700"
