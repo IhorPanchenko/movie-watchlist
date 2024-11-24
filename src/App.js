@@ -12,6 +12,7 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter
+        basename="/movie-watchlist"
         future={{
           v7_fetcherPersist: true,
           v7_normalizeFormMethod: true,
