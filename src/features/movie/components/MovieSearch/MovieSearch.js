@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { fetchMovies } from "../../../api/movieApi";
-import { addMovieToWatchlist } from "../redux/movieSlice";
+import { fetchMovies } from "../../../../api/movieApi";
+import { addMovieToWatchlist } from "../../redux/movieSlice";
 import SearchInput from "./SearchInput";
-import MovieCard from "./MovieCard/MovieCard";
+import MovieCard from "../MovieCard/MovieCard";
 import SortingControls from "./SortingControls";
 
 const MovieSearch = () => {

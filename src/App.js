@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import { store } from "./features/movie/redux/store/store";
 import Navbar from "./features/movie/components/Navbar/Navbar";
-import MovieSearch from "./features/movie/components/MovieSearch";
+import MovieSearch from "./features/movie/components/MovieSearch/MovieSearch";
 import Watchlist from "./features/movie/components/Watchlist";
 
 function App() {

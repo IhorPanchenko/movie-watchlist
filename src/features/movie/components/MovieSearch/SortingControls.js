@@ -32,8 +32,8 @@ const SortingControls = ({ sortBy, setSortBy, sortOrder, setSortOrder }) => {
         onChange={(e) => setSortOrder(e.target.value)}
         className={selectClass}
       >
-        <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
+        <option value="asc">Ascending</option>
       </select>
     </fieldset>
   );
