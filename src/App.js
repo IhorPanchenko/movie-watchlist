@@ -9,12 +9,10 @@ import MovieSearch from "./features/movie/components/MovieSearch/MovieSearch";
 import Watchlist from "./features/movie/components/Watchlist";
 
 function App() {
-  const basename =
-    process.env.NODE_ENV === "production" ? "/movie-watchlist" : "";
   return (
     <Provider store={store}>
       <BrowserRouter
-        basename={basename}
+        basename="/movie-watchlist"
         future={{
           v7_fetcherPersist: true,
           v7_normalizeFormMethod: true,
