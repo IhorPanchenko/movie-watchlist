@@ -23,9 +23,9 @@ function App() {
       >
         <div className="min-h-screen bg-white dark:bg-gray-900">
           <Navbar />
+          <ToastContainer autoClose={1500} />
 
           <main className="mx-auto max-w-7xl px-4 py-20">
-            <ToastContainer />
             <Routes>
               <Route path="/" element={<MovieSearch />} />
               <Route path="/watchlist" element={<Watchlist />} />

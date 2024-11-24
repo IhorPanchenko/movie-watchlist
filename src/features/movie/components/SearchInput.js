@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const SearchInput = React.memo(
   ({ searchTerm, setSearchTerm, handleSearch, loading }) => {
+    const [sortBy, setSortBy] = useState("rating"); // Default sorting by rating
+    const [sortOrder, setSortOrder] = useState("desc"); // Default descending order
+
     const handleSubmit = (e) => {
       e.preventDefault();
       if (!searchTerm.trim()) {
