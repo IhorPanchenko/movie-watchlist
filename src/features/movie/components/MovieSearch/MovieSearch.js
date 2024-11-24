@@ -87,9 +87,9 @@ const MovieSearch = () => {
       {loading && <p className="text-center text-gray-500">Loading...</p>}
       {error && <p className="text-center text-red-500">{error}</p>}
 
-      <div className="flex items-center my-6">
+      <div className="flex flex-col md:flex-row md:items-center my-6">
         {/* Results Heading */}
-        <h2 className="text-2xl font-bold dark:text-gray-200">
+        <h2 className="text-xl md:text-2xl font-bold dark:text-gray-200">
           {queryTerm ? `Search Results: ${queryTerm}` : "Upcoming Movies:"}
         </h2>
 

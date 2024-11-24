@@ -2,12 +2,10 @@ import PropTypes from "prop-types";
 
 const SortingControls = ({ sortBy, setSortBy, sortOrder, setSortOrder }) => {
   const selectClass =
-    "border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 p-2 rounded-lg";
+    "p-2 border rounded-lg border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200";
 
   return (
-    <fieldset className="flex items-center space-x-2 ml-6">
-      <legend className="sr-only">Sorting Controls</legend>
-
+    <fieldset className="mt-3 md:mt-0 md:ml-6 flex flex-col xxs:flex-row xxs:items-center xxs:space-x-2 xxs:space-y-0 space-y-2">
       {/* Sort By Dropdown */}
       <label htmlFor="sortBy" className="text-gray-900 dark:text-gray-200">
         Sort by:
