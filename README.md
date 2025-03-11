@@ -74,19 +74,6 @@ Ensure you have the following installed:
 
    The app will be available at `http://localhost:3000`.
 
-### Getting an OMDb API Key
-
-The app uses the OMDb API to retrieve movie data. Follow these steps to obtain an API key:
-
-1. Visit [OMDb API](https://www.omdbapi.com/apikey.aspx).
-2. Sign up with your email and requested details.
-3. You'll receive an API key via email.
-4. Copy the API key and add it to your `.env` file like so:
-
-   ```bash
-   REACT_APP_OMDB_API_KEY=your_api_key_here
-   ```
-
 ### Available Scripts
 
 - **`npm start`**: Starts the development server.
